@@ -9,8 +9,9 @@ Funciona direto no navegador e pode ser instalada na tela inicial do celular.
 |---|---|
 | `app.html` | A estrutura da página (normalmente não precisa editar) |
 | `motor.js` | O funcionamento: busca, progresso, telas (normalmente não precisa editar) |
-| `config.js` | Nome, logo, vídeo de boas-vindas, aviso, suporte, atalhos de busca e FAQ |
+| `config.js` | Nome, logo, vídeo de boas-vindas, aviso, suporte e FAQ |
 | `conteudo.js` | "O Grande Livro das Receitas Naturais": 25 capítulos, 168 receitas, índice por sintoma e consulta rápida |
+| `atalhos.js` | Índices do livro: sintomas (em grupos, com ícones) e ingredientes |
 | `guia.js` | "O Guia da Saúde Natural": prefácio, 25 capítulos e conclusão |
 | `img/` | Ilustrações dos livros (receitas, infográficos e tabelas) |
 | `index.html` | Redireciona para `app.html` (depois vira a página de vendas) |
@@ -25,3 +26,12 @@ Para corrigir um texto, procure a receita em `conteudo.js` pelo título e edite 
 ## Publicar na Vercel
 
 Importe este repositório na Vercel (Framework: **Other**, sem build). O endereço da área de membros será `seu-dominio/app.html`.
+
+## Pensado para o público 50+
+
+- Navegação só com toques: menu de baixo com 5 botões (Início, Sintomas, Receitas, Guia, Ajuda).
+- Sintomas e ingredientes em botões grandes com ícones — ninguém precisa digitar.
+- A busca por palavra existe, mas fica escondida em "Prefere digitar?".
+- Botão "Aa" em todas as telas para aumentar a letra (fica salvo no aparelho).
+- O botão voltar do celular funciona; toda tela tem "Voltar" e "Ir para o início".
+- "Continuar de onde parei" na tela inicial.
