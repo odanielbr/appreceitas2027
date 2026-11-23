@@ -26,6 +26,9 @@ const RECS = CAPS.flatMap(c=>c.receitas.map(r=>({c,r})));
 const REC = {}; RECS.forEach(x=>REC[x.r.n]=x);
 const rkey = n=>'r'+n, gkey = id=>'g:'+id;
 const capDoneCount = c=>c.receitas.filter(r=>done.has(rkey(r.n))).length;
+const CAP_EMOJI = {1:'🛡️',2:'⚖️',3:'🩸',4:'❤️',5:'🍽️',6:'🥬',7:'🌙',8:'🔋',9:'🦴',10:'😷',11:'✨',12:'💧',13:'🌸',14:'🧠',15:'🫖',
+  16:'🤕',17:'🦵',18:'🤧',19:'🦷',20:'👨',21:'🧒',22:'🩹',23:'🍷',24:'🥤',25:'🧂'};
+const X_EMOJI = {'x-comece':'🌱','x-cautelas':'⚠️','x-glossario':'🌿','x-conclusao':'📜'};
 const gLabel = g => g.num===0 ? 'Começo do livro' : g.num>25 ? 'Fim do livro' : 'Capítulo '+g.num;
 
 function updateProgress(){
@@ -118,6 +121,11 @@ function capRow(c){
     <span class="tx"><b>${esc(c.titulo)}</b><small>Capítulo ${c.num} · ${t} receita${t>1?'s':''}${d?` · ${d} lida${d>1?'s':''}`:''}</small></span>
     <span class="st">${CHECK}</span></button>`;
 }
+function capTile(c){
+  const d = capDoneCount(c), t = c.receitas.length;
+  return `<button class="tile ${d===t?'done':''}" data-cap="${c.id}"><span class="ck">${CHECK}</span><span class="em">${CAP_EMOJI[c.num]||'🍵'}</span>${esc(c.titulo)}
+    <small>Capítulo ${c.num} · ${t} receita${t>1?'s':''}</small>${d&&d<t?`<small class="lidas">✓ ${d} lida${d>1?'s':''}</small>`:''}</button>`;
+}
 function readRow(x, sub){
   const isG = GCAPS.includes(x);
   return `<button class="row ${isG&&done.has(gkey(x.id))?'done':''}" data-read="${x.id}">
@@ -181,10 +189,10 @@ function renderReceitas(){
     </div>
     ${searchOpen ? `<div class="search"><input id="q" type="search" placeholder="Digite uma palavra" value="${esc(searchQ)}" autocomplete="off"><button id="qClose">Fechar</button></div><div id="qRes"></div>`
                  : `<button class="search-toggle" id="qOpen">🔍 Prefere digitar? Buscar por palavra</button>`}
-    <div class="sec-title"><span class="em">📚</span> Capítulos</div>
-    ${CAPS.map(capRow).join('')}
+    <div class="sec-title"><span class="em">📚</span> ${CAPS.length} capítulos · ${RECS.length} receitas</div>
+    <div class="tiles">${CAPS.map(capTile).join('')}</div>
     <div class="sec-title"><span class="em">🔎</span> Consulta rápida</div>
-    ${X.map(x=>readRow(x, x.sub)).join('')}
+    <div class="tiles">${X.map(x=>`<button class="tile" data-read="${x.id}"><span class="em">${X_EMOJI[x.id]||'📄'}</span>${esc(x.titulo)}<small>Para consultar</small></button>`).join('')}</div>
     <div class="spacer-bottom"></div>`;
   if(searchOpen){
     const q=$('q'); q.addEventListener('input',()=>{ searchQ=q.value; runSearch(); }); runSearch();
@@ -236,7 +244,7 @@ function renderList(){
   if(ctx.tipo==='cap'){
     const c = CAPS.find(x=>x.id===ctx.id); nums = c.receitas.map(r=>r.n);
     $('lv-top').textContent = 'Capítulo '+c.num;
-    head = `<div class="kicker">Capítulo ${c.num}</div><h1 class="title">${esc(c.titulo)}</h1><p class="lead">${esc(c.intro)}</p>
+    head = `<div class="kicker">Capítulo ${c.num}</div><h1 class="title"><span style="font-size:34px">${CAP_EMOJI[c.num]||''}</span> ${esc(c.titulo)}</h1><p class="lead">${esc(c.intro)}</p>
       ${c.info?`<div class="hero-img"><img src="${c.info}" alt=""></div>`:''}`;
   } else {
     const src = ctx.tipo==='sint' ? A.grupos.flatMap(g=>g.itens) : A.ingredientes;

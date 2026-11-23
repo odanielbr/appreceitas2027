@@ -89,6 +89,10 @@
   .tile:active{transform:scale(.97);border-color:var(--accent)}
   .tile .em{font-size:34px;line-height:1}
   .tile small{font-size:13px;font-weight:600;color:var(--muted)}
+  .tile{position:relative}
+  .tile small.lidas{color:var(--accent);font-weight:700}
+  .tile .ck{display:none;position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:var(--accent);place-items:center}
+  .tile.done{border-color:var(--accent)} .tile.done .ck{display:grid}
 
   .note{margin-top:18px;padding:16px;border-radius:16px;border:2px solid rgba(178,97,0,.25);background:rgba(178,97,0,.06);font-size:15px;color:var(--text);line-height:1.6}
   .note b{color:var(--warn)}
