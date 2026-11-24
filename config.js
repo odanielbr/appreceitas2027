@@ -4,7 +4,7 @@
    ============================================================ */
 window.CONFIG = {
   // Nome que aparece no topo e na aba do navegador
-  nomeApp: 'Saúde Natural',
+  nomeApp: 'Aplicativo de Receita',
 
   // Caminho do logo (ex.: './logo.webp'). Deixe '' para usar o nome em texto.
   logo: '',

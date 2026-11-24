@@ -1,6 +1,6 @@
 {
-  "name": "Saúde Natural",
-  "short_name": "Saúde Natural",
+  "name": "Aplicativo de Receita",
+  "short_name": "Receitas",
   "start_url": "./app.html",
   "scope": "./",
   "display": "standalone",
