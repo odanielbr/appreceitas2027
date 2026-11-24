@@ -1,6 +1,365 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=app.html">
-<title>Saúde Natural</title>
-<script>location.replace('app.html');</script>
-</head><body><a href="app.html">Abrir a área de membros</a></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aplicativo de Receita — 168 receitas naturais no seu celular</title>
+<meta name="description" content="168 receitas naturais organizadas por sintoma, com passo a passo e cautelas, mais o Guia da Saúde Natural. Acesso imediato pelo celular.">
+<meta name="theme-color" content="#faf8f4">
+<meta property="og:title" content="Aplicativo de Receita">
+<meta property="og:description" content="168 receitas naturais na palma da sua mão. Toque no sintoma e veja a receita.">
+<meta property="og:image" content="lp/especialista.webp">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preload" as="image" href="lp/especialista-560.webp" imagesrcset="lp/especialista-560.webp 560w, lp/especialista.webp 900w" imagesizes="(max-width:600px) 100vw, 560px">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf8f4; --cream:#f3eee3; --surface:#fff; --text:#1b241c; --muted:#4f594d;
+    --green:#2e7d46; --green-d:#1f5f34; --green-s:rgba(46,125,70,.1); --gold:#e0a526; --warn:#b26100;
+    --border:rgba(31,42,32,.1); --shadow:0 12px 28px -18px rgba(31,42,32,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:'Montserrat',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;font-weight:500;overflow-x:hidden}
+  img{max-width:100%;display:block;height:auto}
+  a{color:inherit}
+  b,strong{font-weight:800}
+  .wrap{max-width:560px;margin:0 auto;padding:0 20px}
+  section{padding:52px 0}
+  h1,h2,h3{font-weight:800;line-height:1.18;letter-spacing:-.01em}
+  h1{font-size:34px}
+  h2{font-size:28px;text-align:center}
+  h1 em,h2 em{font-style:italic;color:var(--green)}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green-d);background:var(--green-s);padding:6px 12px;border-radius:99px}
+  .center{text-align:center}
+  .lead{font-size:18px;color:var(--muted);margin-top:14px}
+  .sub{color:var(--muted);text-align:center;margin-top:10px}
+
+  /* faixa do topo */
+  .ticker{background:var(--green-d);color:#fff;overflow:hidden;white-space:nowrap;font-size:13px;font-weight:700;letter-spacing:.03em}
+  .ticker div{display:inline-block;padding:9px 0;animation:tk 28s linear infinite}
+  .ticker span{margin:0 14px}
+  @keyframes tk{to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.ticker div{animation:none}}
+
+  /* botão */
+  .cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:20px 18px;border-radius:16px;background:var(--green);color:#fff;
+    font-size:19px;font-weight:800;text-decoration:none;text-align:center;line-height:1.25;box-shadow:0 16px 30px -14px rgba(46,125,70,.85);margin-top:22px;transition:transform .12s}
+  .cta:active{transform:scale(.98)}
+  .cta{flex-wrap:wrap}
+  .cta small{display:block;flex-basis:100%;font-size:13px;font-weight:600;opacity:.9}
+  .checks{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:14px;font-size:14px;font-weight:700;color:var(--muted)}
+  .checks li::before{content:"✓ ";color:var(--green);font-weight:800}
+
+  /* hero */
+  .hero{padding:28px 0 40px}
+  .hero h1{margin-top:14px}
+  .hero-img{margin-top:22px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:var(--cream);aspect-ratio:1/1}
+
+  /* números */
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 10px;text-align:center;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:34px;color:var(--green);line-height:1.1}
+  .stat span{font-size:14px;color:var(--muted);font-weight:700}
+
+  /* passos */
+  .band{background:var(--cream)}
+  .steps{display:grid;gap:26px;margin-top:28px}
+  .step{display:grid;grid-template-columns:1fr 150px;gap:16px;align-items:center}
+  .step:nth-child(even){grid-template-columns:150px 1fr}
+  .step:nth-child(even) .phone{order:-1}
+  .step .n{width:40px;height:40px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px;margin-bottom:8px}
+  .step h3{font-size:20px}
+  .step p{font-size:16px;color:var(--muted);margin-top:4px}
+  .phone{border-radius:26px;border:7px solid #1c1e1d;overflow:hidden;background:#fff;box-shadow:0 18px 30px -18px rgba(0,0,0,.55);aspect-ratio:420/909}
+  .phone img{width:100%;height:100%;object-fit:cover}
+
+  /* capítulos */
+  .cats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}
+  .cat{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 12px;text-align:center;box-shadow:var(--shadow)}
+  .cat .em{font-size:32px;line-height:1}
+  .cat b{display:block;font-size:15px;line-height:1.3;margin-top:8px}
+  .cat small{display:block;font-size:13px;color:var(--green);font-weight:800;margin-top:4px}
+  .more{text-align:center;margin-top:16px;font-weight:700;color:var(--muted)}
+
+  /* cada receita */
+  .feat{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;margin-top:26px}
+  .feat ul{list-style:none;display:grid;gap:12px}
+  .feat li{display:flex;gap:10px;font-size:16px;line-height:1.4;font-weight:700}
+  .feat li span{font-size:22px;line-height:1}
+
+  /* guia / bônus */
+  .bonus{margin-top:26px;background:var(--surface);border:2px dashed rgba(224,165,38,.7);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+  .bonus .tag{display:inline-block;background:var(--gold);color:#3a2a00;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:99px}
+  .bonus h3{font-size:22px;margin-top:10px}
+  .bonus p{color:var(--muted);font-size:16px;margin-top:6px}
+  .bonus-grid{display:grid;grid-template-columns:1fr 140px;gap:16px;align-items:center}
+  .mini{list-style:none;margin-top:12px;display:grid;gap:8px;font-size:15px;font-weight:700}
+
+  /* facilidade */
+  .easy{display:grid;gap:12px;margin-top:26px}
+  .easy div{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+  .easy .em{flex:none;width:52px;height:52px;border-radius:14px;background:var(--cream);display:grid;place-items:center;font-size:28px}
+  .easy b{display:block;font-size:17px;line-height:1.3}
+  .easy small{font-size:15px;color:var(--muted)}
+
+  /* para quem */
+  .who{list-style:none;display:grid;gap:10px;margin-top:22px}
+  .who li{display:flex;gap:12px;font-size:17px;line-height:1.45;background:var(--surface);border-radius:16px;padding:14px 16px;border:1px solid var(--border)}
+  .who li::before{content:"✓";flex:none;width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px}
+
+  /* oferta */
+  .offer{margin-top:26px;background:var(--surface);border:3px solid var(--green);border-radius:26px;padding:26px 20px;box-shadow:0 22px 40px -24px rgba(31,95,52,.6);position:relative}
+  .offer .badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:6px 16px;border-radius:99px;white-space:nowrap}
+  .offer h3{font-size:22px;text-align:center;margin-top:6px}
+  .offer ul{list-style:none;margin-top:16px;display:grid;gap:10px}
+  .offer li{display:flex;gap:10px;font-size:16px;line-height:1.4;font-weight:700}
+  .offer li::before{content:"✓";color:var(--green);font-weight:800}
+  .price{text-align:center;margin-top:20px}
+  .price s{color:var(--muted);font-size:17px}
+  .price .now{font-size:52px;font-weight:800;color:var(--green-d);line-height:1.05}
+  .price .now small{font-size:22px}
+  .price .pay{font-size:14px;color:var(--muted);font-weight:700}
+
+  /* garantia */
+  .guar{display:flex;gap:18px;align-items:center;margin-top:24px;background:var(--surface);border-radius:24px;padding:20px;border:1px solid var(--border);box-shadow:var(--shadow)}
+  .seal{flex:none;width:96px;height:96px;border-radius:50%;background:radial-gradient(circle,#fff 52%,var(--gold) 54%);border:4px solid var(--gold);display:grid;place-items:center;text-align:center;line-height:1}
+  .seal b{font-size:34px;color:var(--green-d);display:block}
+  .seal span{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--green-d)}
+  .guar p{font-size:16px;color:var(--muted)}
+  .guar h3{font-size:20px;margin-bottom:4px}
+
+  /* faq */
+  details{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-top:10px;overflow:hidden}
+  summary{list-style:none;cursor:pointer;padding:18px 16px;font-weight:800;font-size:17px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";flex:none;width:30px;height:30px;border-radius:50%;background:var(--green-s);color:var(--green);display:grid;place-items:center;font-size:20px}
+  details[open] summary::after{content:"−"}
+  details p{padding:0 16px 18px;color:var(--muted);font-size:16px}
+
+  footer{padding:36px 0 110px;text-align:center;font-size:13px;color:var(--muted);line-height:1.6}
+  footer b{color:var(--text)}
+  .disc{margin-top:12px;font-size:12px}
+
+  /* botão fixo no celular */
+  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(250,248,244,.96);border-top:1px solid var(--border);
+    transform:translateY(110%);transition:transform .25s}
+  .sticky.on{transform:none}
+  .sticky .cta{margin:0;max-width:560px;margin:0 auto;padding:16px;font-size:17px}
+  @media(min-width:700px){ h1{font-size:42px} h2{font-size:32px} .step{grid-template-columns:1fr 190px}.step:nth-child(even){grid-template-columns:190px 1fr}.feat{grid-template-columns:190px 1fr} }
+</style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true"><div>
+  <span>🌿 168 receitas naturais</span><span>•</span><span>📱 Direto no celular</span><span>•</span><span>⚡ Acesso imediato</span><span>•</span><span>📖 Guia da Saúde Natural incluso</span><span>•</span><span>🔠 Letra grande, fácil de usar</span><span>•</span>
+  <span>🌿 168 receitas naturais</span><span>•</span><span>📱 Direto no celular</span><span>•</span><span>⚡ Acesso imediato</span><span>•</span><span>📖 Guia da Saúde Natural incluso</span><span>•</span><span>🔠 Letra grande, fácil de usar</span><span>•</span>
+</div></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap center">
+    <span class="eyebrow">📱 Aplicativo de Receita</span>
+    <h1>168 receitas naturais <em>na palma da sua mão</em></h1>
+    <p class="lead">Sentiu alguma coisa? Toque no sintoma e veja a receita: chás, sucos e preparos caseiros, com passo a passo e os cuidados de cada uma.</p>
+    <div class="hero-img">
+      <img src="lp/especialista-560.webp" srcset="lp/especialista-560.webp 560w, lp/especialista.webp 900w" sizes="(max-width:600px) 100vw, 560px" width="560" height="560" alt="Mulher mostrando o Aplicativo de Receita aberto no celular" fetchpriority="high">
+    </div>
+    <a class="cta" data-checkout href="#oferta">Quero meu acesso agora →</a>
+    <ul class="checks"><li>Acesso imediato</li><li>Funciona no celular</li><li>Garantia de <span data-garantia>7</span> dias</li></ul>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>168</b><span>receitas naturais</span></div>
+      <div class="stat"><b>25</b><span>capítulos por tema</span></div>
+      <div class="stat"><b>43</b><span>sintomas para tocar</span></div>
+      <div class="stat"><b>72</b><span>ingredientes de casa</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="band">
+  <div class="wrap">
+    <h2>Encontre a receita em <em>3 toques</em></h2>
+    <p class="sub">Sem digitar nada. Sem procurar em livro grosso.</p>
+    <div class="steps">
+      <div class="step"><div><div class="n">1</div><h3>Toque no que você sente</h3><p>Insônia, gases, pressão, garganta, inchaço… são 43 sintomas, cada um com seu botão.</p></div>
+        <div class="phone"><img src="lp/tela-sintomas.webp" width="420" height="909" alt="Tela de sintomas do aplicativo" loading="lazy"></div></div>
+      <div class="step"><div><div class="n">2</div><h3>Veja as receitas indicadas</h3><p>Aparecem só as receitas do livro para aquele sintoma, com foto e para que serve.</p></div>
+        <div class="phone"><img src="lp/tela-lista.webp" width="420" height="909" alt="Lista de receitas para insônia" loading="lazy"></div></div>
+      <div class="step"><div><div class="n">3</div><h3>Siga o passo a passo</h3><p>Ingredientes, como preparar, como usar e quem deve evitar. Tudo explicado com calma.</p></div>
+        <div class="phone"><img src="lp/tela-receita.webp" width="420" height="909" alt="Receita aberta no aplicativo" loading="lazy"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE TEM DENTRO -->
+<section>
+  <div class="wrap">
+    <h2>Receitas para o corpo <em>inteiro</em></h2>
+    <p class="sub">25 capítulos organizados pelo que o seu corpo precisa.</p>
+    <div class="cats">
+      <div class="cat"><div class="em">🛡️</div><b>Imunidade e defesas</b><small>10 receitas</small></div>
+      <div class="cat"><div class="em">🍽️</div><b>Digestão e intestino</b><small>10 receitas</small></div>
+      <div class="cat"><div class="em">🌙</div><b>Sono, ansiedade e estresse</b><small>9 receitas</small></div>
+      <div class="cat"><div class="em">❤️</div><b>Coração, pressão e colesterol</b><small>8 receitas</small></div>
+      <div class="cat"><div class="em">🩸</div><b>Açúcar no sangue em equilíbrio</b><small>8 receitas</small></div>
+      <div class="cat"><div class="em">🦴</div><b>Inflamação, dores e articulações</b><small>8 receitas</small></div>
+      <div class="cat"><div class="em">😷</div><b>Garganta, tosse e respiração</b><small>9 receitas</small></div>
+      <div class="cat"><div class="em">⚖️</div><b>Peso saudável e metabolismo</b><small>10 receitas</small></div>
+    </div>
+    <p class="more">+ 17 capítulos: pele e cabelo, saúde da mulher, saúde do homem, memória, circulação, rins, alergias, dores de cabeça e mais.</p>
+
+    <div class="feat">
+      <div class="phone"><img src="lp/tela-receita2.webp" width="420" height="909" alt="Detalhes de uma receita" loading="lazy"></div>
+      <ul>
+        <li><span>🛒</span>Ingredientes que você encontra no mercado</li>
+        <li><span>🥣</span>Modo de preparo simples</li>
+        <li><span>🕐</span>Como e quando usar</li>
+        <li><span>💡</span>Dica para dar certo</li>
+        <li><span>⚠️</span>Cautela: quem deve evitar e por quê</li>
+      </ul>
+    </div>
+    <a class="cta" data-checkout href="#oferta">Quero as 168 receitas →</a>
+  </div>
+</section>
+
+<!-- BÔNUS -->
+<section class="band">
+  <div class="wrap">
+    <h2>E ainda leva <em>de presente</em></h2>
+    <div class="bonus">
+      <div class="bonus-grid">
+        <div><span class="tag">Bônus</span><h3>📖 Guia da Saúde Natural</h3>
+          <p>Um livro de leitura com 25 capítulos sobre sono, alimentação, intestino, coração, estresse e envelhecer bem, com conselhos de um médico.</p></div>
+        <div class="phone"><img src="lp/tela-guia.webp" width="420" height="909" alt="Capítulo do Guia da Saúde Natural" loading="lazy"></div>
+      </div>
+    </div>
+    <div class="bonus">
+      <span class="tag">Bônus</span><h3>🔎 Consulta rápida</h3>
+      <ul class="mini">
+        <li>⚠️ Tabela de cautelas: quem deve ter cuidado com o quê</li>
+        <li>🌿 Glossário das ervas</li>
+        <li>🧺 Receitas pelo ingrediente que você tem em casa</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FÁCIL -->
+<section>
+  <div class="wrap">
+    <h2>Feito para quem <em>não gosta de complicação</em></h2>
+    <div class="easy">
+      <div><span class="em">👆</span><span><b>Só tocar, sem digitar</b><small>Tudo funciona com botões grandes.</small></span></div>
+      <div><span class="em">🔠</span><span><b>Letra grande</b><small>Um botão aumenta o texto em todas as telas.</small></span></div>
+      <div><span class="em">📲</span><span><b>Fica na tela do celular</b><small>Instala como um aplicativo, sem loja e sem senha difícil.</small></span></div>
+      <div><span class="em">⏯️</span><span><b>Continua de onde parou</b><small>O app lembra a última receita que você abriu.</small></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="band">
+  <div class="wrap">
+    <h2>É para <em>você</em> que…</h2>
+    <ul class="who">
+      <li>Gosta de cuidar da saúde com o que tem na cozinha</li>
+      <li>Quer receitas caseiras explicadas de forma simples</li>
+      <li>Quer saber quem pode e quem deve evitar cada preparo</li>
+      <li>Prefere ter tudo no celular, sempre à mão</li>
+    </ul>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section id="oferta">
+  <div class="wrap">
+    <h2>Garanta o seu <em>acesso hoje</em></h2>
+    <div class="offer">
+      <span class="badge">Acesso imediato</span>
+      <h3>Aplicativo de Receita</h3>
+      <ul>
+        <li>168 receitas naturais em 25 capítulos</li>
+        <li>Busca por sintoma e por ingrediente</li>
+        <li>Bônus: Guia da Saúde Natural</li>
+        <li>Bônus: Tabela de cautelas e glossário das ervas</li>
+        <li>Acesso vitalício pelo celular</li>
+      </ul>
+      <div class="price">
+        <s>De R$ <span data-de>47</span></s>
+        <div class="now"><small>R$</small> <span data-preco>27</span></div>
+        <div class="pay">pagamento único</div>
+      </div>
+      <a class="cta" data-checkout href="#">Quero meu acesso agora →<small>Pix ou cartão · acesso na hora</small></a>
+    </div>
+
+    <div class="guar">
+      <div class="seal"><span><b data-garantia>7</b>dias de<br>garantia</span></div>
+      <div><h3>Risco zero</h3><p>Se não gostar, é só pedir o reembolso em até <span data-garantia>7</span> dias. Você recebe 100% do valor de volta.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="band">
+  <div class="wrap">
+    <h2>Perguntas <em>frequentes</em></h2>
+    <details><summary>Como recebo o acesso?</summary><p>Logo depois do pagamento você recebe um link por e-mail. É só tocar nele e o aplicativo abre no celular.</p></details>
+    <details><summary>Preciso baixar alguma coisa da loja?</summary><p>Não. O aplicativo abre direto no navegador do celular e, se quiser, você coloca o ícone na tela inicial com dois toques.</p></details>
+    <details><summary>Sou ruim com tecnologia. Vou conseguir usar?</summary><p>Sim. Ele foi feito para ser simples: botões grandes, letra que aumenta e tudo funciona só tocando, sem digitar.</p></details>
+    <details><summary>Os ingredientes são caros ou difíceis de achar?</summary><p>A maioria é de cozinha ou de feira: gengibre, limão, mel, alho, camomila, hortelã, aveia e outros.</p></details>
+    <details><summary>As receitas substituem o médico?</summary><p>Não. As receitas apoiam o bem-estar e não substituem consultas, exames ou medicamentos. Cada receita traz uma cautela explicando quem deve evitar. Se você tem algum problema de saúde ou toma remédios, converse com o seu médico.</p></details>
+    <details><summary>E se eu não gostar?</summary><p>Você tem <span data-garantia>7</span> dias de garantia. É só pedir e devolvemos todo o valor.</p></details>
+    <a class="cta" data-checkout href="#">Quero meu acesso agora →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>Aplicativo de Receita</b> · © <span id="ano">2026</span><br>
+    Dúvidas: <span data-email></span>
+    <p class="disc">Conteúdo educativo e informativo. As receitas apoiam o bem-estar, não curam doenças e não substituem o acompanhamento médico. Gestantes, lactantes, crianças, pessoas com doenças crônicas ou que usam medicamentos devem consultar um profissional de saúde antes de usar qualquer receita.</p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="cta" data-checkout href="#">Quero meu acesso — R$ <span data-preco>27</span></a></div>
+
+<script>
+/* ===========================================================
+   CONFIGURAÇÃO DA OFERTA — troque aqui
+   =========================================================== */
+var OFERTA = {
+  preco: '27',                 // preço por
+  de: '47',                    // preço "de" (riscado)
+  garantia: '7',               // dias de garantia
+  checkout: '#oferta',         // link do checkout (Kiwify, Hotmart, Kirvano…)
+  email: 'suporte@seudominio.com.br'
+};
+(function(){
+  function all(s,f){ document.querySelectorAll(s).forEach(f); }
+  all('[data-preco]',function(e){ e.textContent=OFERTA.preco; });
+  all('[data-de]',function(e){ e.textContent=OFERTA.de; });
+  all('[data-garantia]',function(e){ e.textContent=OFERTA.garantia; });
+  all('[data-email]',function(e){ e.textContent=OFERTA.email; });
+  var q = location.search; // repassa UTMs para o checkout
+  all('[data-checkout]',function(a){
+    if(OFERTA.checkout.charAt(0)==='#'){ a.href=OFERTA.checkout; return; }
+    a.href = OFERTA.checkout + (q ? (OFERTA.checkout.indexOf('?')>-1 ? '&'+q.slice(1) : q) : '');
+  });
+  document.getElementById('ano').textContent = new Date().getFullYear();
+  var st=document.getElementById('sticky'), hero=document.querySelector('.hero .cta'), of=document.getElementById('oferta');
+  function upd(){ var y=window.scrollY, h=hero.getBoundingClientRect().bottom, o=of.getBoundingClientRect();
+    st.classList.toggle('on', h<0 && !(o.top<window.innerHeight && o.bottom>0)); }
+  window.addEventListener('scroll',upd,{passive:true}); upd();
+})();
+</script>
+</body>
+</html>
