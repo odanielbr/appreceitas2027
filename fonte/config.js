@@ -6,6 +6,14 @@ window.CONFIG = {
   // Nome que aparece no topo e na aba do navegador
   nomeApp: 'Aplicativo de Receita',
 
+  // Especialista que assina o aplicativo
+  especialista: { nome: 'Ana Flávia', foto: 'img/ana.webp', fotoGrande: 'img/ana-300.webp' },
+
+  // Endereços onde o app pode abrir. Em qualquer outro endereço ele mostra aviso de cópia não autorizada.
+  // Ao ter domínio próprio, acrescente aqui (ex.: 'www.seudominio.com.br') e peça para gerar o app de novo.
+  dominios: ['appreceitas2027.vercel.app'],
+  siteOficial: 'https://appreceitas2027.vercel.app',
+
   // Caminho do logo (ex.: './logo.webp'). Deixe '' para usar o nome em texto.
   logo: '',
 
@@ -15,8 +23,8 @@ window.CONFIG = {
   vturbConta: '',
 
   boasVindas: {
-    titulo: 'Olá! Que bom ter você aqui 🌿',
-    texto: 'Aqui estão as 168 receitas do Grande Livro das Receitas Naturais e todo o Guia da Saúde Natural. É só tocar nos botões abaixo.',
+    titulo: 'Olá! Eu sou a Ana Flávia 🌿',
+    texto: 'Que bom ter você aqui. Neste aplicativo estão as 168 receitas do Grande Livro das Receitas Naturais e todo o Guia da Saúde Natural. É só tocar nos botões abaixo.',
     passos: [
       ['Busque pelo incômodo', 'Digite o que está sentindo, como "insônia", ou um ingrediente, como "gengibre".'],
       ['Ou navegue pelos capítulos', '25 capítulos de receitas, organizados pelo que o seu corpo precisa.'],
@@ -29,7 +37,7 @@ window.CONFIG = {
   aviso: 'Conteúdo educativo e informativo. As receitas apoiam o bem-estar, não curam doenças e não substituem exames, medicamentos ou o acompanhamento do seu médico. Se você tem alguma condição de saúde, usa medicamentos, está grávida, amamentando ou vai oferecer algo a uma criança, converse antes com o seu médico ou farmacêutico.',
 
   suporte: {
-    texto: 'Nossa equipe responde em até 24 horas úteis.',
+    texto: 'A equipe da Ana Flávia responde em até 24 horas úteis.',
     email: 'suporte@seudominio.com.br',   // troque pelo seu e-mail
     whatsapp: ''                           // ex.: '5511999999999' (só números). Deixe '' para esconder.
   },

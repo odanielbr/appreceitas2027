@@ -8,8 +8,9 @@ Funciona direto no navegador e pode ser instalada na tela inicial do celular.
 | Arquivo | Para que serve |
 |---|---|
 | `app.html` | A estrutura da página (normalmente não precisa editar) |
-| `motor.js` | O funcionamento: busca, progresso, telas (normalmente não precisa editar) |
-| `config.js` | Nome, logo, vídeo de boas-vindas, aviso, suporte e FAQ |
+| `fonte/config.js` | Nome, especialista, domínios permitidos, vídeo, aviso, suporte e FAQ |
+| `fonte/motor.js` | O funcionamento do app (busca, progresso, telas, trava de endereço) |
+| `app.bin.js` | Versão codificada de config + motor, que o site usa. **Gerada** — não edite à mão |
 | `conteudo.js` | "O Grande Livro das Receitas Naturais": 25 capítulos, 168 receitas, índice por sintoma e consulta rápida |
 | `atalhos.js` | Índices do livro: sintomas (em grupos, com ícones) e ingredientes |
 | `guia.js` | "O Guia da Saúde Natural": prefácio, 25 capítulos e conclusão |
@@ -35,3 +36,10 @@ Importe este repositório na Vercel (Framework: **Other**, sem build). O endere�
 - Botão "Aa" em todas as telas para aumentar a letra (fica salvo no aparelho).
 - O botão voltar do celular funciona; toda tela tem "Voltar" e "Ir para o início".
 - "Continuar de onde parei" na tela inicial.
+
+## Proteção
+
+- `fonte/` e `divulgacao/` não são publicados (ver `.vercelignore`).
+- Depois de editar `fonte/config.js` ou `fonte/motor.js`, rode `python3 fonte/gerar.py` para gerar `app.bin.js` de novo.
+- O app só abre nos endereços de `dominios` (em `fonte/config.js`); em outros, mostra "Cópia não autorizada".
+- Ilustrações com marca d'água "© Ana Flávia · Aplicativo de Receita".

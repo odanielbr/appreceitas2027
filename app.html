@@ -47,6 +47,17 @@
   .brand .leaf{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
   .brand img{height:40px;max-width:180px;object-fit:contain}
   .brand span.nm{line-height:1.15;font-size:18px}
+  .brand span.nm small{display:block;font-size:13px;font-weight:700;color:var(--accent)}
+  .brand .b-foto{width:46px;height:46px;border-radius:50%;object-fit:cover;flex:none;border:2px solid var(--accent)}
+  .w-top{display:flex;align-items:center;gap:14px}
+  .w-foto{width:76px;height:76px;border-radius:50%;object-fit:cover;flex:none;border:3px solid var(--accent-soft)}
+  .sign{display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px 14px;border-radius:16px;background:var(--accent-soft)}
+  .sign img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
+  .sign b{display:block;font-size:16px} .sign small{font-size:13px;color:var(--muted)}
+  .copy{margin-top:16px;font-size:12px;color:var(--faint);text-align:center;line-height:1.5}
+  body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  img{-webkit-user-drag:none;-webkit-touch-callout:none;pointer-events:auto}
+  input{-webkit-user-select:text;user-select:text}
   .spacer{flex:1}
   .font-btn{flex:none;display:flex;align-items:center;gap:6px;height:46px;padding:0 14px;border-radius:14px;background:var(--surface);border:2px solid var(--border-2);font-weight:800;font-size:16px}
   .font-btn small{font-size:12px;font-weight:700;color:var(--muted)}
@@ -322,10 +333,9 @@
   <button data-page="ajuda"><span class="em">💬</span>Ajuda</button>
 </nav>
 
-<script src="config.js"></script>
 <script src="conteudo.js"></script>
 <script src="guia.js"></script>
 <script src="atalhos.js"></script>
-<script src="motor.js"></script>
+<script src="app.bin.js"></script>
 </body>
 </html>

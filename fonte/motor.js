@@ -5,7 +5,23 @@
    está em conteudo.js (receitas), guia.js (guia) e atalhos.js (índices).
    ============================================================ */
 (function(){
-const C = window.CONFIG, L = window.LIVRO, G = window.GUIA, X = window.EXTRAS, A = window.ATALHOS;
+const C = window.CONFIG;
+/* ---------- trava de endereço ---------- */
+(function(){
+  const h = location.hostname, ok = !h || h==='localhost' || h==='127.0.0.1' ||
+    (C.dominios||[]).some(d=>h===d || h.endsWith('.'+d)) || (/^appreceitas2027(-[a-z0-9-]+)?\.vercel\.app$/).test(h);
+  if(!ok){
+    document.body.innerHTML = '<div style="font-family:Arial,sans-serif;max-width:480px;margin:60px auto;padding:24px;text-align:center;line-height:1.6">'+
+      '<div style="font-size:48px">🔒</div><h1 style="font-size:24px;margin:10px 0">Cópia não autorizada</h1>'+
+      '<p>Este aplicativo pertence a <b>'+C.especialista.nome+'</b> e só funciona no endereço oficial.</p>'+
+      '<p><a style="display:inline-block;margin-top:14px;padding:14px 22px;background:#2e7d46;color:#fff;border-radius:12px;text-decoration:none;font-weight:bold" href="'+C.siteOficial+'">Ir para o aplicativo oficial</a></p></div>';
+    throw new Error('dominio');
+  }
+})();
+document.addEventListener('contextmenu', e=>{ if(!e.target.closest('input')) e.preventDefault(); });
+document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+document.addEventListener('copy', e=>{ const s=String(document.getSelection()); if(s.length>200){ e.preventDefault(); } });
+const L = window.LIVRO, G = window.GUIA, X = window.EXTRAS, A = window.ATALHOS;
 const $ = id => document.getElementById(id);
 const esc = s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm = s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
@@ -134,6 +150,9 @@ function readRow(x, sub){
     <span class="st">${CHECK}</span></button>`;
 }
 const homeBtn = `<button class="home-btn" data-home>🏠 Ir para o início</button>`;
+const ANO = new Date().getFullYear();
+const sign = (txt) => `<div class="sign"><img src="${C.especialista.foto}" alt=""><span><b>${esc(C.especialista.nome)}</b><small>${txt}</small></span></div>`;
+const copy = () => `<p class="copy">© ${ANO} ${esc(C.especialista.nome)} · ${esc(C.nomeApp)}. Todos os direitos reservados. Proibida a cópia, reprodução ou revenda deste conteúdo.</p>`;
 
 /* ---------- INÍCIO ---------- */
 function lastItem(){
@@ -147,7 +166,7 @@ function renderInicio(){
   const p = $('page-inicio');
   const video = C.videoBoasVindas ? `<div class="welcome-video"><vturb-smartplayer id="vid-${esc(C.videoBoasVindas)}" style="display:block;margin:0 auto;width:100%"></vturb-smartplayer></div>` : '';
   p.innerHTML = `
-    <div class="welcome"><h1>${esc(C.boasVindas.titulo)}</h1><p>${esc(C.boasVindas.texto)}</p>${video}</div>
+    <div class="welcome"><div class="w-top"><img class="w-foto" src="${C.especialista.fotoGrande}" alt="${esc(C.especialista.nome)}"><h1>${esc(C.boasVindas.titulo)}</h1></div><p>${esc(C.boasVindas.texto)}</p>${video}</div>
     ${lastItem()}
     <div class="sec-title"><span class="em">👇</span> O que você quer fazer?</div>
     <div class="big-list">
@@ -160,6 +179,7 @@ function renderInicio(){
     </div>
     <button class="install-banner" data-goto="install"><span class="em">📲</span><span><b>Instalar o app no celular</b><small>Toque aqui para ver como</small></span></button>
     <div class="note"><b>Importante:</b> ${esc(C.aviso)}</div>
+    ${copy()}
     <div class="spacer-bottom"></div>`;
   if(C.videoBoasVindas && !window._vt){ window._vt=1; const s=document.createElement('script');
     s.src=`https://scripts.converteai.net/${C.vturbConta}/players/${C.videoBoasVindas}/v4/player.js`; s.async=true; document.head.appendChild(s); }
@@ -225,6 +245,7 @@ function renderAjuda(){
     </div>
     <div class="sec-title"><span class="em">❓</span> Perguntas frequentes</div>
     ${(C.faq||[]).map(f=>`<div class="faq-item"><button class="faq-q"><span>${esc(f.p)}</span><span class="pm">+</span></button><div class="faq-a">${esc(f.r)}</div></div>`).join('')}
+    ${copy()}
     <div class="spacer-bottom"></div>`;
   $('ajLetra').addEventListener('click',()=>$('sizeSheet').hidden=false);
   $('page-ajuda').querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',()=>{
@@ -288,6 +309,7 @@ function renderRecipe(n){
     ${r.importante?blk('❗','Importante',para(r.importante),'care'):''}
     ${blk('⚠️','Cautela — leia antes',(r.cautela?para(r.cautela):'')+`<p class="small">${esc(C.aviso)}</p>`,'care')}
     <button class="done-btn ${isDone?'is-done':''}" id="doneBtn">${isDone?'✓ Já li esta receita':'✓ Marcar como lida'}</button>
+    ${sign('Receita do '+esc(C.nomeApp))}
     <div class="navbtns">
       <button id="prevR" ${prev?'':'disabled'}>‹ Anterior${prev?`<small>${esc(REC[prev].r.titulo)}</small>`:''}</button>
       <button id="nextR" ${next?'':'disabled'}>Próxima ›${next?`<small>${esc(REC[next].r.titulo)}</small>`:''}</button>
@@ -339,6 +361,7 @@ function renderRead(id){
     <div class="kicker">${isG?esc(gLabel(x)):esc(x.sub||'')}</div>
     <h1 class="title">${esc(x.titulo)}</h1>
     <div class="read">${renderItems(x.itens, x.id)}</div>
+    ${sign(isG?'Guia da Saúde Natural · '+esc(C.nomeApp):esc(C.nomeApp))}
     ${rel?`<div class="sec-title"><span class="em">🍵</span> Receitas sobre este tema</div>${capRow(rel)}`:''}
     ${isG?`<button class="done-btn ${isDone?'is-done':''}" id="gDone">${isDone?'✓ Já li este capítulo':'✓ Marcar capítulo como lido'}</button>
       <div class="navbtns"><button id="gPrev" ${prev?'':'disabled'}>‹ Anterior${prev?`<small>${esc(prev.titulo)}</small>`:''}</button>
@@ -364,6 +387,7 @@ if(/iPhone|iPad|iPod/i.test(navigator.userAgent)) document.querySelector('.devic
 /* ---------- marca e início ---------- */
 document.title = C.nomeApp + ' — Área de Membros';
 $('brand').innerHTML = C.logo ? `<img src="${esc(C.logo)}" alt="${esc(C.nomeApp)}">`
+  : C.especialista ? `<img class="b-foto" src="${C.especialista.foto}" alt=""><span class="nm">${esc(C.nomeApp)}<small>por ${esc(C.especialista.nome)}</small></span>`
   : `<span class="leaf"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 21c0-9 5-15 15-16-1 10-7 15-15 16z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 21l8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="nm">${esc(C.nomeApp)}</span>`;
 try{ history.replaceState({d:0,p:'inicio'},''); }catch(e){}
 showPage('inicio', false); updateProgress();
